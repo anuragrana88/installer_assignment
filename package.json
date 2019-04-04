@@ -1,0 +1,17 @@
+{
+  "name": "installer_assignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anurag Rana",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.88.0",
+    "async": "^2.6.2",
+    "dotenv": "^7.0.0",
+    "express-integrator-extension": "^0.2.4"
+  }
+}

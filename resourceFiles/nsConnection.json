@@ -1,0 +1,21 @@
+{
+  "type": "netsuite",
+  "name": "NetSuite - Anurag TBA",
+  "_connectorId": "",
+  "_integrationId": "",
+  "netsuite": {
+    "account": "TSTDRV840553",
+    "roleId": "3",
+    "email": "anurag.rana@celigo.com",
+    "password": "",
+    "environment": "production",
+    "requestLevelCredentials": true,
+    "dataCenterURLs": {
+      "restDomain": "https://tstdrv840553.restlets.api.netsuite.com",
+      "webservicesDomain": "https://tstdrv840553.suitetalk.api.netsuite.com",
+      "systemDomain": "https://tstdrv840553.app.netsuite.com"
+    },
+    "wsdlVersion": "current",
+    "concurrencyLevel": 1
+  }
+}

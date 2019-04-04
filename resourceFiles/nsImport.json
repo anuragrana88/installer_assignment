@@ -1,0 +1,59 @@
+{
+  "name": "Import Data in Custom Record",
+  "responseTransform": {
+    "type": "expression",
+    "expression": {
+      "version": "1"
+    },
+    "version": "1"
+  },
+  "_connectionId": "",
+  "distributed": true,
+  "lookups": [],
+  "netsuite_da": {
+    "operation": "add",
+    "recordType": "customrecord843",
+    "lookups": [],
+    "mapping": {
+      "fields": [
+        {
+          "generate": "custrecord220",
+          "extract": "['Email']",
+          "internalId": false,
+          "immutable": false,
+          "discardIfEmpty": false
+        },
+        {
+          "generate": "custrecord219",
+          "extract": "['Name']",
+          "internalId": false,
+          "immutable": false,
+          "discardIfEmpty": false
+        },
+        {
+          "generate": "custrecord221",
+          "extract": "['Phone']",
+          "internalId": false,
+          "immutable": false,
+          "discardIfEmpty": false
+        },
+        {
+          "generate": "custrecord222",
+          "extract": "['ShipAddress']",
+          "internalId": false,
+          "immutable": false,
+          "discardIfEmpty": false
+        }
+      ],
+      "lists": []
+    }
+  },
+  "filter": {
+    "type": "expression",
+    "expression": {
+      "version": "1"
+    },
+    "version": "1"
+  },
+  "adaptorType": "NetSuiteDistributedImport"
+}

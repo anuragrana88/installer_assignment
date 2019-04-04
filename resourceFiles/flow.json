@@ -1,0 +1,9 @@
+{
+  "name": "DF1 Customer Export",
+  "disabled": false,
+  "_exportId": "",
+  "_importId": "",
+  "_integrationId": "",
+  "skipRetries": false,
+  "sandbox": false
+}
