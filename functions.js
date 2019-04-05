@@ -524,7 +524,16 @@ var obj = {
                                                 "label": "Prefix for Customer Name",
                                                 "tooltip": "Select the prefix that you want use in customer name. For example: Mr. John Shaw"
                                             }
-                                        ]
+                                        ],
+                                        "flows": [
+                                            {
+                                                "showSchedule": true,
+                                                "showMapping": true,
+                                                "_id": "5ca629e3490fcb030b73a713"
+                                            }
+                                        ],
+                                        "columns": 1,
+                                        "title": "Order"
                                     }
                                     ]
                                 }
