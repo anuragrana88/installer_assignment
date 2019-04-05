@@ -125,14 +125,13 @@ var obj = {
             var testNSConnection = function () {
                 return new Promise(function (resolve, reject) {
                     request({
-                        method: 'GET',
-                        url: 'https://tstdrv840553.restlets.api.netsuite.com/app/site/hosting/restlet.nl',
-                        qs: {script: '1150', deploy: '1'},
-                        headers:
-                            {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'NLAuth nlauth_account=TSTDRV840553,nlauth_email=' + process.env.NS_USER + ',nlauth_signature=' + process.env.NS_PASSWORD_ENCODED + ',nlauth_role=3'
-                            }
+                        'url': 'https://api.staging.integrator.io/v1/connections/' + that.cacheResourceIds['nsConnectionId'] + '/ping',
+                        'method': 'GET',
+                        'headers': {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + options['bearerToken']
+                        },
+                        'json': true
                     }, function (error, response, body) {
                         if (error)
                             reject(error);
@@ -482,6 +481,68 @@ var obj = {
                 });
             };
 
+            var updateSectionFields = function () {
+                return new Promise(function (resolve, reject) {
+                    request({
+                            'url': 'https://api.staging.integrator.io/v1/integrations/' + options['_integrationId'],
+                            'method': 'PUT',
+                            'headers': {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + options['bearerToken']
+                            },
+                            'body': {
+                                'mode': 'settings',
+                                'name': 'NetSuite Custom Connector',
+                                'settings': {
+                                    'sections': [{
+                                        "fields": [
+                                            {
+                                                "tooltip": "By default all customer will be exported, to override this functionality set this checkbox and sync customers created/updated since last time the flow ran.",
+                                                "name": "exports_delta_or_all__5ca629e1ec5c172792287e37",
+                                                "type": "checkbox",
+                                                "value": exportDelta,
+                                                "label": "Export Delta Customer"
+                                            },
+                                            {
+                                                "options": [
+                                                    [
+                                                        "Mr. ",
+                                                        "Mr. "
+                                                    ], [
+                                                        "Ms. ",
+                                                        "Ms. "
+                                                    ], [
+                                                        "Mrs. ",
+                                                        "Mrs. "
+                                                    ]
+                                                ],
+                                                "supportsRefresh": true,
+                                                "name": "imports_add_name_prefix__5ca629e2490fcb030b73a711",
+                                                "type": "select",
+                                                "value": prefix,
+                                                "required": false,
+                                                "label": "Prefix for Customer Name",
+                                                "tooltip": "Select the prefix that you want use in customer name. For example: Mr. John Shaw"
+                                            }
+                                        ]
+                                    }
+                                    ]
+                                }
+
+                            },
+                            'json': true
+                        },
+                        function (errUpdInt, resUpdInt, bodyUpdInt) {
+                            if (errUpdInt) {
+                                console.log(errUpdInt);
+                                reject(errUpdInt);
+                            }
+                            console.log('Integration# ' + bodyUpdInt['_id'] + ' updated!');
+                            resolve(bodyUpdInt['_id']);
+                        });
+                });
+            };
+
             fetchExport().then(function (exportData) {
                 if (exportDelta) {
                     exportData['type'] = 'delta';
@@ -506,7 +567,9 @@ var obj = {
                 }
                 return updateImport(importData);
             }).then(function (result) {
-                callback(null, {'success': true, 'pending': options['pending']})
+                return updateSectionFields();
+            }).then(function (result) {
+                callback(null, {'success': true, 'pending': options['pending']});
             }).catch(function (err) {
                 callback(err, {'success': false, 'pending': options['pending']})
             });
